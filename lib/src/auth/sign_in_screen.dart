@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/auth/components/custom_text_field.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +36,7 @@ class SignInScreen extends StatelessWidget {
                   CustomTextField(
                     icon: Icons.lock,
                     label: 'Senha',
-                    isObscure: true,
+                    isSecret: true,
                   ),
                 ],
               ),
