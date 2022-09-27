@@ -1,7 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/auth/components/custom_text_field.dart';
-import 'package:green_grocer/src/auth/constants/custom_colors.dart';
+import 'package:green_grocer/src/auth/sign_up_screen.dart';
+import 'package:green_grocer/src/constants/custom_colors.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -146,7 +147,13 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           side: const BorderSide(width: 2, color: Colors.green),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpScreen(),
+                            ),
+                          );
+                        },
                         child: const Text(
                           'Criar conta',
                           style: TextStyle(fontSize: 18),
