@@ -1,8 +1,10 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+
+import 'package:green_grocer/src/constants/app_data.dart' as data;
 import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/pages/home/components/category_tile.dart';
-import 'package:green_grocer/src/constants/app_data.dart' as appData;
+import 'package:green_grocer/src/pages/home/components/items_tile.dart';
 
 class HomeTabScreen extends StatefulWidget {
   const HomeTabScreen({Key? key}) : super(key: key);
@@ -66,23 +68,29 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     );
   }
 
-  Widget gridViewItems() {
-    return Expanded(
-      child: GridView.builder(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        physics: const BouncingScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          childAspectRatio: 9 / 11.5,
+  Widget searchBar() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: TextFormField(
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          isDense: true,
+          hintText: ' Pesquise aqui...',
+          hintStyle: TextStyle(
+            color: Colors.grey.shade400,
+            fontSize: 14,
+          ),
+          prefix: Icon(
+            Icons.search,
+            color: Constants.customContrastColor,
+            size: 25,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(60),
+            borderSide: const BorderSide(width: 0, style: BorderStyle.none),
+          ),
         ),
-        itemCount: appData.items.length,
-        itemBuilder: (_, index) {
-          return Container(
-            color: Colors.red,
-          );
-        },
       ),
     );
   }
@@ -97,42 +105,36 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
           return CategoryTile(
             onPressed: () {
               setState(() {
-                selectedCategory = Constants.categories[index];
+                selectedCategory = data.categories[index];
               });
             },
-            category: Constants.categories[index],
-            isSelected: Constants.categories[index] == selectedCategory,
+            category: data.categories[index],
+            isSelected: data.categories[index] == selectedCategory,
           );
         },
         separatorBuilder: (_, index) => const SizedBox(width: 10),
-        itemCount: Constants.categories.length,
+        itemCount: data.categories.length,
       ),
     );
   }
 
-  Widget searchBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: TextFormField(
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          isDense: true,
-          hintText: 'Pesquise aqui...',
-          hintStyle: TextStyle(
-            color: Colors.grey.shade400,
-            fontSize: 14,
-          ),
-          prefix: Icon(
-            Icons.search,
-            color: Constants.customContrastColor,
-            size: 21,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(60),
-            borderSide: const BorderSide(width: 0, style: BorderStyle.none),
-          ),
+  Widget gridViewItems() {
+    return Expanded(
+      child: GridView.builder(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        physics: const BouncingScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: 9 / 11.5,
         ),
+        itemCount: data.items.length,
+        itemBuilder: (_, index) {
+          return ItemsTile(
+            itemModel: data.items[index],
+          );
+        },
       ),
     );
   }

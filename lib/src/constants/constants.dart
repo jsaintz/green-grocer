@@ -16,11 +16,4 @@ abstract class Constants {
 
   static MaterialColor customSwatchColor = const MaterialColor(0xFF8BC34A, _swatchOpacity);
   static Color customContrastColor = Colors.red.shade700;
-  static List<String> categories = [
-    'Frutas',
-    'Grãos',
-    'Verduras',
-    'Temperos',
-    'Cereais',
-  ];
 }
