@@ -1,9 +1,18 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/constants/constants.dart';
+import 'package:green_grocer/src/pages/home/components/category_tile.dart';
+import 'package:green_grocer/src/constants/app_data.dart' as appData;
 
-class HomeTabScreen extends StatelessWidget {
+class HomeTabScreen extends StatefulWidget {
   const HomeTabScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeTabScreen> createState() => _HomeTabScreenState();
+}
+
+class _HomeTabScreenState extends State<HomeTabScreen> {
+  String selectedCategory = 'Frutas';
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +59,53 @@ class HomeTabScreen extends StatelessWidget {
       body: Column(
         children: [
           searchBar(),
+          categoriesTab(),
+          gridViewItems(),
         ],
+      ),
+    );
+  }
+
+  Widget gridViewItems() {
+    return Expanded(
+      child: GridView.builder(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        physics: const BouncingScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: 9 / 11.5,
+        ),
+        itemCount: appData.items.length,
+        itemBuilder: (_, index) {
+          return Container(
+            color: Colors.red,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget categoriesTab() {
+    return Container(
+      padding: const EdgeInsets.only(left: 25),
+      height: 40,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (_, index) {
+          return CategoryTile(
+            onPressed: () {
+              setState(() {
+                selectedCategory = Constants.categories[index];
+              });
+            },
+            category: Constants.categories[index],
+            isSelected: Constants.categories[index] == selectedCategory,
+          );
+        },
+        separatorBuilder: (_, index) => const SizedBox(width: 10),
+        itemCount: Constants.categories.length,
       ),
     );
   }
