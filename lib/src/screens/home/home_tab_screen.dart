@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:green_grocer/src/constants/custom_colors.dart';
+import 'package:green_grocer/src/constants/constants.dart';
 
 class HomeTabScreen extends StatelessWidget {
   const HomeTabScreen({Key? key}) : super(key: key);
@@ -18,11 +18,11 @@ class HomeTabScreen extends StatelessWidget {
             children: [
               TextSpan(
                 text: 'Green',
-                style: TextStyle(color: CustomColors.customSwatchColor),
+                style: TextStyle(color: Constants.customSwatchColor),
               ),
               TextSpan(
                 text: 'grocer',
-                style: TextStyle(color: CustomColors.customContrastColor),
+                style: TextStyle(color: Constants.customContrastColor),
               ),
             ],
           ),
@@ -33,14 +33,14 @@ class HomeTabScreen extends StatelessWidget {
             child: GestureDetector(
               onTap: () {},
               child: Badge(
-                badgeColor: CustomColors.customContrastColor,
+                badgeColor: Constants.customContrastColor,
                 badgeContent: const Text(
                   '2',
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
                 child: Icon(
                   Icons.shopping_cart,
-                  color: CustomColors.customSwatchColor,
+                  color: Constants.customSwatchColor,
                 ),
               ),
             ),
@@ -70,7 +70,7 @@ class HomeTabScreen extends StatelessWidget {
           ),
           prefix: Icon(
             Icons.search,
-            color: CustomColors.customContrastColor,
+            color: Constants.customContrastColor,
             size: 21,
           ),
           border: OutlineInputBorder(
