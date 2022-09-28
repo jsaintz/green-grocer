@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/models/item_model.dart';
+import 'package:green_grocer/src/pages/product/product_screen.dart';
 import 'package:green_grocer/src/services/utils_services.dart';
 
 class ItemsTile extends StatelessWidget {
@@ -14,46 +15,55 @@ class ItemsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Card(
-          elevation: 5,
-          shadowColor: Colors.grey.shade300,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(child: Image.asset(itemModel.imgUrl)),
-                Text(
-                  itemModel.itemName,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      utilsServices.priceToCurrency(itemModel.price),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Constants.customSwatchColor,
-                      ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ProductScreen(itemModel: itemModel),
+              ),
+            );
+          },
+          child: Card(
+            elevation: 5,
+            shadowColor: Colors.grey.shade300,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(child: Image.asset(itemModel.imgUrl)),
+                  Text(
+                    itemModel.itemName,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      ' /${itemModel.unit}',
-                      style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        utilsServices.priceToCurrency(itemModel.price),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Constants.customSwatchColor,
+                        ),
                       ),
-                    )
-                  ],
-                )
-              ],
+                      Text(
+                        ' /${itemModel.unit}',
+                        style: TextStyle(
+                          color: Colors.grey.shade500,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
