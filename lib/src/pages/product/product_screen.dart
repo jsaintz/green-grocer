@@ -17,74 +17,103 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: Image.asset(itemModel.imgUrl),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(32),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(50),
+          Column(
+            children: [
+              Expanded(
+                child: Hero(
+                  tag: itemModel.imgUrl,
+                  child: Image.asset(itemModel.imgUrl),
                 ),
-                boxShadow: [
-                  BoxShadow(color: Colors.grey.shade600, offset: const Offset(0, 2)),
-                ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          itemModel.itemName,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: const TextStyle(
-                            fontSize: 27,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 30,
-                        width: 70,
-                        color: Colors.red,
-                      )
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(32),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(50),
+                    ),
+                    boxShadow: [
+                      BoxShadow(color: Colors.grey.shade600, offset: const Offset(0, 2)),
                     ],
                   ),
-                  Text(
-                    utilsServices.priceToCurrency(itemModel.price),
-                    style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                      color: Constants.customSwatchColor,
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: SingleChildScrollView(
-                        child: Text(
-                          itemModel.description * 10,
-                          style: const TextStyle(
-                            height: 1.5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              itemModel.itemName,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: const TextStyle(
+                                fontSize: 27,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 30,
+                            width: 70,
+                            color: Colors.red,
+                          )
+                        ],
+                      ),
+                      Text(
+                        utilsServices.priceToCurrency(itemModel.price),
+                        style: TextStyle(
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          color: Constants.customSwatchColor,
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              itemModel.description * 10,
+                              style: const TextStyle(
+                                height: 1.5,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 55,
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                          onPressed: () {},
+                          label: const Text(
+                            'Add no Carrinho',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          icon: const Icon(
+                            Icons.add_shopping_cart_outlined,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'bot',
-                    ),
-                  ),
-                ],
+                ),
+              ),
+            ],
+          ),
+          Positioned(
+            left: 10,
+            top: 10,
+            child: SafeArea(
+              child: IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.arrow_back_ios),
               ),
             ),
           ),
