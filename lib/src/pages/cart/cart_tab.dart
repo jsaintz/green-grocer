@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/constants/constants.dart';
+import 'package:green_grocer/src/pages/cart/components/cart_tile.dart';
 import 'package:green_grocer/src/services/utils_services.dart';
+import 'package:green_grocer/src/constants/app_data.dart' as data;
 
 class CartTab extends StatelessWidget {
   CartTab({Key? key}) : super(key: key);
@@ -15,9 +17,12 @@ class CartTab extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
-            child: Placeholder(
-              color: Colors.red,
+          Expanded(
+            child: ListView.builder(
+              itemCount: data.cartItems.length,
+              itemBuilder: (_, index) {
+                return CartTile(cartItem: data.cartItems[index]);
+              },
             ),
           ),
           const SizedBox(
