@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:green_grocer/src/pages/auth/components/custom_text_field.dart';
+import 'package:green_grocer/src/common/custom_text_field.dart';
 import 'package:green_grocer/src/constants/constants.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 

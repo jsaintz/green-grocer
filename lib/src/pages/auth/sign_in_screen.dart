@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:green_grocer/src/pages/auth/components/custom_text_field.dart';
+import 'package:green_grocer/src/common/custom_text_field.dart';
 import 'package:green_grocer/src/pages/auth/sign_up_screen.dart';
 import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/pages/base/base_screen.dart';
