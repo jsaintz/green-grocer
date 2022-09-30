@@ -1,13 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/constants/constants.dart';
+import 'package:green_grocer/src/models/cart_item_model.dart';
 import 'package:green_grocer/src/pages/cart/components/cart_tile.dart';
 import 'package:green_grocer/src/services/utils_services.dart';
 import 'package:green_grocer/src/constants/app_data.dart' as data;
 
-class CartTab extends StatelessWidget {
-  CartTab({Key? key}) : super(key: key);
+class CartTab extends StatefulWidget {
+  const CartTab({Key? key}) : super(key: key);
 
+  @override
+  State<CartTab> createState() => _CartTabState();
+}
+
+class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
+
+  void removeItemFromCart(CartItemModel cartItemModel) {
+    setState(() {
+      data.cartItems.remove(cartItemModel);
+    });
+  }
+
+  double cartTotalPrice() {
+    double total = 0;
+
+    for (var item in data.cartItems) {
+      total += item.totalPrice();
+    }
+
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +43,10 @@ class CartTab extends StatelessWidget {
             child: ListView.builder(
               itemCount: data.cartItems.length,
               itemBuilder: (_, index) {
-                return CartTile(cartItem: data.cartItems[index]);
+                return CartTile(
+                  cartItem: data.cartItems[index],
+                  remove: removeItemFromCart,
+                );
               },
             ),
           ),
@@ -53,7 +78,7 @@ class CartTab extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  utilsServices.priceToCurrency(50.05),
+                  utilsServices.priceToCurrency(cartTotalPrice()),
                   style: TextStyle(
                     fontSize: 23,
                     color: Constants.customSwatchColor,

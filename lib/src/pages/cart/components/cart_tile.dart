@@ -6,14 +6,21 @@ import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/models/cart_item_model.dart';
 import 'package:green_grocer/src/services/utils_services.dart';
 
-class CartTile extends StatelessWidget {
+class CartTile extends StatefulWidget {
   final CartItemModel cartItem;
+  final Function(CartItemModel) remove;
 
-  CartTile({
+  const CartTile({
     Key? key,
     required this.cartItem,
+    required this.remove,
   }) : super(key: key);
 
+  @override
+  State<CartTile> createState() => _CartTileState();
+}
+
+class _CartTileState extends State<CartTile> {
   final UtilsServices utilsServices = UtilsServices();
 
   @override
@@ -25,25 +32,34 @@ class CartTile extends StatelessWidget {
       ),
       child: ListTile(
         leading: Image.asset(
-          cartItem.itemModel.imgUrl,
+          widget.cartItem.itemModel.imgUrl,
           height: 60,
           width: 60,
         ),
         subtitle: Text(
-          utilsServices.priceToCurrency(cartItem.totalPrice()),
+          utilsServices.priceToCurrency(widget.cartItem.totalPrice()),
           style: TextStyle(
             color: Constants.customSwatchColor,
             fontWeight: FontWeight.bold,
           ),
         ),
         title: Text(
-          cartItem.itemModel.itemName,
+          widget.cartItem.itemModel.itemName,
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
         trailing: QuantityWidget(
-          value: cartItem.quantity,
-          suffixText: cartItem.itemModel.unit,
-          result: (quantity) {},
+          value: widget.cartItem.quantity,
+          suffixText: widget.cartItem.itemModel.unit,
+          result: (quantity) {
+            setState(() {
+              widget.cartItem.quantity = quantity;
+
+              if (quantity == 0) {
+                widget.remove(widget.cartItem);
+              }
+            });
+          },
+          isRemovable: true,
         ),
       ),
     );
