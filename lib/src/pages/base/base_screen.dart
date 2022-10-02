@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/pages/cart/cart_tab.dart';
 import 'package:green_grocer/src/pages/home/home_tab_screen.dart';
+import 'package:green_grocer/src/pages/profile/profile_tab.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _BaseScreenState extends State<BaseScreen> {
           const HomeTabScreen(),
           const CartTab(),
           Container(color: Colors.purple),
-          Container(color: Colors.blue),
+          const ProfileTab(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
