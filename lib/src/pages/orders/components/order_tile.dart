@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/models/cart_item_model.dart';
 
 import 'package:green_grocer/src/models/order_model.dart';
+import 'package:green_grocer/src/pages/orders/components/order_status_widget.dart';
 import 'package:green_grocer/src/services/utils_services.dart';
 
 class OrderTile extends StatelessWidget {
@@ -24,6 +26,7 @@ class OrderTile extends StatelessWidget {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          initiallyExpanded: order.status == 'pending_payment',
           title: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,21 +43,31 @@ class OrderTile extends StatelessWidget {
           ),
           childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           children: [
-            SizedBox(
-              height: 150,
+            IntrinsicHeight(
               child: Row(
                 children: [
                   Expanded(
+                    flex: 3,
+                    child: SizedBox(
+                      height: 150,
                       child: ListView(
-                    children: order.items.map((orderItem) {
-                      return _orderItemWidget(orderItem);
-                    }).toList(),
-                  )),
-                  Expanded(
-                    child: Container(
-                      color: Colors.blue,
+                        children: order.items.map((orderItem) {
+                          return _orderItemWidget(orderItem);
+                        }).toList(),
+                      ),
                     ),
                   ),
+                  VerticalDivider(
+                    color: Colors.grey.shade300,
+                    thickness: 2,
+                    width: 8,
+                  ),
+                  Expanded(
+                      flex: 2,
+                      child: OrderStatusWidget(
+                        status: order.status,
+                        isOverdue: order.overdueDateTime.isBefore(DateTime.now()),
+                      )),
                 ],
               ),
             )
