@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/models/item_model.dart';
 import 'package:green_grocer/src/pages/product/product_screen.dart';
@@ -6,8 +8,14 @@ import 'package:green_grocer/src/services/utils_services.dart';
 
 class ItemsTile extends StatelessWidget {
   final ItemModel itemModel;
+  final void Function(GlobalKey) cartAnimationMethod;
+  final GlobalKey imageGk = GlobalKey();
 
-  ItemsTile({Key? key, required this.itemModel}) : super(key: key);
+  ItemsTile({
+    Key? key,
+    required this.itemModel,
+    required this.cartAnimationMethod,
+  }) : super(key: key);
 
   final UtilsServices utilsServices = UtilsServices();
 
@@ -37,7 +45,10 @@ class ItemsTile extends StatelessWidget {
                   Expanded(
                     child: Hero(
                       tag: itemModel.imgUrl,
-                      child: Image.asset(itemModel.imgUrl),
+                      child: Image.asset(
+                        itemModel.imgUrl,
+                        key: imageGk,
+                      ),
                     ),
                   ),
                   Text(
@@ -76,7 +87,9 @@ class ItemsTile extends StatelessWidget {
           top: 4,
           right: 4,
           child: GestureDetector(
-            onTap: () {},
+            onTap: () {
+              cartAnimationMethod(imageGk);
+            },
             child: Container(
               height: 40,
               width: 35,

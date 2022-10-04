@@ -1,3 +1,5 @@
+import 'package:add_to_cart_animation/add_to_cart_animation.dart';
+import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,12 @@ class HomeTabScreen extends StatefulWidget {
 
 class _HomeTabScreenState extends State<HomeTabScreen> {
   String selectedCategory = 'Frutas';
+  GlobalKey<CartIconKey> gkCart = GlobalKey<CartIconKey>();
+  late Function(GlobalKey) runAddToCardAnimation;
+
+  void itemSelectedCartAnimations(GlobalKey globalKeyImage) {
+    runAddToCardAnimation(globalKeyImage);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,23 +55,37 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
                 badgeColor: Constants.customContrastColor,
                 badgeContent: const Text(
                   '2',
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
-                child: Icon(
-                  Icons.shopping_cart,
-                  color: Constants.customSwatchColor,
+                child: AddToCartIcon(
+                  key: gkCart,
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    color: Constants.customSwatchColor,
+                  ),
                 ),
               ),
             ),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          searchBar(),
-          categoriesTab(),
-          gridViewItems(),
-        ],
+      body: AddToCartAnimation(
+        gkCart: gkCart,
+        previewDuration: const Duration(microseconds: 100),
+        previewCurve: Curves.ease,
+        receiveCreateAddToCardAnimationMethod: (addToCartAnimationMethod) {
+          runAddToCardAnimation = addToCartAnimationMethod;
+        },
+        child: Column(
+          children: [
+            searchBar(),
+            categoriesTab(),
+            gridViewItems(),
+          ],
+        ),
       ),
     );
   }
@@ -133,6 +155,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
         itemBuilder: (_, index) {
           return ItemsTile(
             itemModel: data.items[index],
+            cartAnimationMethod: itemSelectedCartAnimations,
           );
         },
       ),
