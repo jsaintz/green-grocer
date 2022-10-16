@@ -151,7 +151,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
               scrollDirection: Axis.horizontal,
               children: List.generate(
                 10,
-                (index) => Container(
+                (_) => Container(
                   alignment: Alignment.center,
                   margin: const EdgeInsets.only(right: 12),
                   child: CustomShimmer(
