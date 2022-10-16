@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/models/cart_item_model.dart';
