@@ -20,6 +20,7 @@ class _CartTabState extends State<CartTab> {
   void removeItemFromCart(CartItemModel cartItemModel) {
     setState(() {
       data.cartItems.remove(cartItemModel);
+      utilsServices.showToast(message: '${cartItemModel.itemModel.itemName} removido(a) do carinho');
     });
   }
 
@@ -97,7 +98,15 @@ class _CartTabState extends State<CartTab> {
                         )),
                     onPressed: () async {
                       bool? result = await showOrderConfirmation();
-                      log(result.toString());
+                      if (result ?? false) {
+                        // showDialog(context: context, builder: {
+                        //   return PaymenDialod(
+                        //     orders: data.orders.first
+                        //   );
+                        // });
+                      } else {
+                        utilsServices.showToast(message: 'Pedido não confirmado', isError: true);
+                      }
                     },
                     child: const Text(
                       'Concluir Pedido',

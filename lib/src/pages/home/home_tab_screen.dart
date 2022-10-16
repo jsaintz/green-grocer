@@ -7,6 +7,7 @@ import 'package:green_grocer/src/constants/app_data.dart' as data;
 import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/pages/home/components/category_tile.dart';
 import 'package:green_grocer/src/pages/home/components/items_tile.dart';
+import 'package:green_grocer/src/services/utils_services.dart';
 
 class HomeTabScreen extends StatefulWidget {
   const HomeTabScreen({Key? key}) : super(key: key);
@@ -24,6 +25,8 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     runAddToCardAnimation(globalKeyImage);
   }
 
+  final UtilsServices utilsServices = UtilsServices();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,19 +34,22 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: Text.rich(
-          TextSpan(
-            style: const TextStyle(fontSize: 30),
-            children: [
-              TextSpan(
-                text: 'Green',
-                style: TextStyle(color: Constants.customSwatchColor),
-              ),
-              TextSpan(
-                text: 'grocer',
-                style: TextStyle(color: Constants.customContrastColor),
-              ),
-            ],
+        title: GestureDetector(
+          onTap: () {},
+          child: Text.rich(
+            TextSpan(
+              style: const TextStyle(fontSize: 30),
+              children: [
+                TextSpan(
+                  text: 'Green',
+                  style: TextStyle(color: Constants.customSwatchColor),
+                ),
+                TextSpan(
+                  text: 'grocer',
+                  style: TextStyle(color: Constants.customContrastColor),
+                ),
+              ],
+            ),
           ),
         ),
         actions: [
