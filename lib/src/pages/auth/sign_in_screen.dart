@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:green_grocer/src/common/app_name_widget.dart';
 import 'package:green_grocer/src/common/custom_text_field.dart';
 import 'package:green_grocer/src/pages/auth/sign_up_screen.dart';
 import 'package:green_grocer/src/constants/constants.dart';
@@ -29,25 +30,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text.rich(
-                      TextSpan(
-                        style: const TextStyle(fontSize: 40),
-                        children: [
-                          const TextSpan(
-                            text: 'Green',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'Grocer',
-                            style: TextStyle(
-                              color: Constants.customContrastColor,
-                            ),
-                          ),
-                        ],
-                      ),
+                    const AppNameWidget(
+                      greenTitleColor: Colors.white,
+                      textSize: 40,
                     ),
                     SizedBox(
                       height: 30,

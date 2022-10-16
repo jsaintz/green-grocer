@@ -2,6 +2,7 @@ import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:green_grocer/src/common/app_name_widget.dart';
 
 import 'package:green_grocer/src/constants/app_data.dart' as data;
 import 'package:green_grocer/src/constants/constants.dart';
@@ -36,21 +37,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
         centerTitle: true,
         title: GestureDetector(
           onTap: () {},
-          child: Text.rich(
-            TextSpan(
-              style: const TextStyle(fontSize: 30),
-              children: [
-                TextSpan(
-                  text: 'Green',
-                  style: TextStyle(color: Constants.customSwatchColor),
-                ),
-                TextSpan(
-                  text: 'grocer',
-                  style: TextStyle(color: Constants.customContrastColor),
-                ),
-              ],
-            ),
-          ),
+          child: const AppNameWidget(),
         ),
         actions: [
           Padding(
