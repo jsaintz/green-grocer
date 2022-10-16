@@ -3,6 +3,7 @@ import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/common/app_name_widget.dart';
+import 'package:green_grocer/src/common/custom_shimmer.dart';
 
 import 'package:green_grocer/src/constants/app_data.dart' as data;
 import 'package:green_grocer/src/constants/constants.dart';
@@ -27,6 +28,21 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
   }
 
   final UtilsServices utilsServices = UtilsServices();
+
+  bool isloading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(seconds: 3),
+      () => setState(
+        () {
+          isloading = false;
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,44 +130,77 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
     return Container(
       padding: const EdgeInsets.only(left: 25),
       height: 40,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (_, index) {
-          return CategoryTile(
-            onPressed: () {
-              setState(() {
-                selectedCategory = data.categories[index];
-              });
-            },
-            category: data.categories[index],
-            isSelected: data.categories[index] == selectedCategory,
-          );
-        },
-        separatorBuilder: (_, index) => const SizedBox(width: 10),
-        itemCount: data.categories.length,
-      ),
+      child: !isloading
+          ? ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (_, index) {
+                return CategoryTile(
+                  onPressed: () {
+                    setState(() {
+                      selectedCategory = data.categories[index];
+                    });
+                  },
+                  category: data.categories[index],
+                  isSelected: data.categories[index] == selectedCategory,
+                );
+              },
+              separatorBuilder: (_, index) => const SizedBox(width: 10),
+              itemCount: data.categories.length,
+            )
+          : ListView(
+              scrollDirection: Axis.horizontal,
+              children: List.generate(
+                10,
+                (index) => Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(right: 12),
+                  child: CustomShimmer(
+                    height: 20,
+                    width: 80,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+              ),
+            ),
     );
   }
 
   Widget gridViewItems() {
     return Expanded(
-      child: GridView.builder(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        physics: const BouncingScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          childAspectRatio: 9 / 11.5,
-        ),
-        itemCount: data.items.length,
-        itemBuilder: (_, index) {
-          return ItemsTile(
-            itemModel: data.items[index],
-            cartAnimationMethod: itemSelectedCartAnimations,
-          );
-        },
-      ),
+      child: !isloading
+          ? GridView.builder(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              physics: const BouncingScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 9 / 11.5,
+              ),
+              itemCount: data.items.length,
+              itemBuilder: (_, index) {
+                return ItemsTile(
+                  itemModel: data.items[index],
+                  cartAnimationMethod: itemSelectedCartAnimations,
+                );
+              },
+            )
+          : GridView.count(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              physics: const BouncingScrollPhysics(),
+              crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 9 / 11.5,
+              children: List.generate(
+                10,
+                (index) => CustomShimmer(
+                  height: double.infinity,
+                  width: double.infinity,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
     );
   }
 }
