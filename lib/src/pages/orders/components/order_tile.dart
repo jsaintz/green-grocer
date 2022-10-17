@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:green_grocer/src/common/payment_dialog.dart';
 import 'package:green_grocer/src/models/cart_item_model.dart';
 
 import 'package:green_grocer/src/models/order_model.dart';
@@ -95,7 +96,12 @@ class OrderTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => PaymentDialog(order: order),
+                  );
+                },
                 icon: Image.asset(
                   'assets/images/pix.png',
                   height: 18,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_grocer/src/common/payment_dialog.dart';
 import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/models/cart_item_model.dart';
 import 'package:green_grocer/src/pages/cart/components/cart_tile.dart';
@@ -96,12 +97,12 @@ class _CartTabState extends State<CartTab> {
                         )),
                     onPressed: () async {
                       bool? result = await showOrderConfirmation();
+
                       if (result ?? false) {
-                        // showDialog(context: context, builder: {
-                        //   return PaymenDialod(
-                        //     orders: data.orders.first
-                        //   );
-                        // });
+                        showDialog(
+                          context: context,
+                          builder: (_) => PaymentDialog(order: data.orders.first),
+                        );
                       } else {
                         utilsServices.showToast(message: 'Pedido não confirmado', isError: true);
                       }

@@ -34,14 +34,11 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      const Duration(seconds: 3),
-      () => setState(
-        () {
-          isloading = false;
-        },
-      ),
-    );
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        isloading = false;
+      });
+    });
   }
 
   @override
