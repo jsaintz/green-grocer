@@ -1,24 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/common/custom_text_field.dart';
 import 'package:green_grocer/src/constants/constants.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:green_grocer/src/services/utils_services.dart';
 
 class SignUpScreen extends StatelessWidget {
-  SignUpScreen({Key? key}) : super(key: key);
-
-  final cpfFormatter = MaskTextInputFormatter(
-    mask: '###.###.###-##',
-    filter: {
-      '#': RegExp(r'[0-9]'),
-    },
-  );
-
-  final phoneFormatter = MaskTextInputFormatter(
-    mask: '(##) ####-####',
-    filter: {
-      '#': RegExp(r'[0-9]'),
-    },
-  );
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +51,12 @@ class SignUpScreen extends StatelessWidget {
                         CustomTextField(
                           icon: Icons.phone,
                           label: 'Celular',
-                          inputFormatters: [phoneFormatter],
+                          inputFormatters: [UtilsServices().phoneFormatter],
                         ),
                         CustomTextField(
                           icon: Icons.file_copy,
                           label: 'CPF',
-                          inputFormatters: [cpfFormatter],
+                          inputFormatters: [UtilsServices().cpfFormatter],
                         ),
                         SizedBox(
                           height: 50,

@@ -1,10 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:green_grocer/src/common/app_name_widget.dart';
 import 'package:green_grocer/src/common/custom_text_field.dart';
 import 'package:green_grocer/src/pages/auth/sign_up_screen.dart';
 import 'package:green_grocer/src/constants/constants.dart';
-import 'package:green_grocer/src/pages/base/base_screen.dart';
+import 'package:green_grocer/src/routers/pages_routers.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -84,11 +85,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const BaseScreen(),
-                            ),
-                          );
+                          Get.toNamed(PagesRouters.baseRoute);
                         },
                         child: const Text(
                           'Entrar',
