@@ -1,6 +1,5 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
 import 'package:add_to_cart_animation/add_to_cart_icon.dart';
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/common/app_name_widget.dart';
 import 'package:green_grocer/src/common/custom_shimmer.dart';
@@ -10,6 +9,7 @@ import 'package:green_grocer/src/constants/constants.dart';
 import 'package:green_grocer/src/pages/home/components/category_tile.dart';
 import 'package:green_grocer/src/pages/home/components/items_tile.dart';
 import 'package:green_grocer/src/services/utils_services.dart';
+import 'package:badges/badges.dart' as badges;
 
 class HomeTabScreen extends StatefulWidget {
   const HomeTabScreen({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             padding: const EdgeInsets.only(top: 15, right: 15),
             child: GestureDetector(
               onTap: () {},
-              child: Badge(
+              child: badges.Badge(
                 badgeColor: Constants.customContrastColor,
                 badgeContent: const Text(
                   '2',
