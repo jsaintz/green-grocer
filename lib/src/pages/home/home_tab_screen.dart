@@ -1,5 +1,4 @@
 import 'package:add_to_cart_animation/add_to_cart_animation.dart';
-import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:green_grocer/src/common/app_name_widget.dart';
 import 'package:green_grocer/src/common/custom_shimmer.dart';
@@ -21,10 +20,10 @@ class HomeTabScreen extends StatefulWidget {
 class _HomeTabScreenState extends State<HomeTabScreen> {
   String selectedCategory = 'Frutas';
   GlobalKey<CartIconKey> gkCart = GlobalKey<CartIconKey>();
-  late Function(GlobalKey) runAddToCardAnimation;
+  late Function(GlobalKey) runAddToCartAnimation;
 
   void itemSelectedCartAnimations(GlobalKey globalKeyImage) {
-    runAddToCardAnimation(globalKeyImage);
+    runAddToCartAnimation(globalKeyImage);
   }
 
   final UtilsServices utilsServices = UtilsServices();
@@ -58,11 +57,17 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
             child: GestureDetector(
               onTap: () {},
               child: badges.Badge(
-                badgeColor: Constants.customContrastColor,
+                showBadge: false,
+                ignorePointer: false,
+                badgeStyle: badges.BadgeStyle(badgeColor: Constants.customContrastColor),
+                badgeAnimation: const badges.BadgeAnimation.slide(
+                  toAnimate: true,
+                  animationDuration: Duration(seconds: 1),
+                ),
                 badgeContent: const Text(
                   '2',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 12,
                   ),
                 ),
@@ -79,12 +84,12 @@ class _HomeTabScreenState extends State<HomeTabScreen> {
         ],
       ),
       body: AddToCartAnimation(
-        gkCart: gkCart,
-        previewDuration: const Duration(microseconds: 100),
-        previewCurve: Curves.ease,
-        receiveCreateAddToCardAnimationMethod: (addToCartAnimationMethod) {
-          runAddToCardAnimation = addToCartAnimationMethod;
+        cartKey: gkCart,
+        opacity: 0.85,
+        createAddToCartAnimation: (runAddToCartAnimation) {
+          this.runAddToCartAnimation = runAddToCartAnimation;
         },
+        jumpAnimation: const JumpAnimationOptions(),
         child: Column(
           children: [
             searchBar(),
