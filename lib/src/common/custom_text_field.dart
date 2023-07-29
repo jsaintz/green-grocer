@@ -30,7 +30,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   void initState() {
     super.initState();
-
     isObscure = widget.isSecret;
   }
 
@@ -47,11 +46,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
           prefixIcon: Icon(widget.icon),
           suffixIcon: widget.isSecret
               ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isObscure = !isObscure;
-                    });
-                  },
+                  onPressed: () => setState(() {
+                    isObscure = !isObscure;
+                  }),
                   icon: Icon(isObscure ? Icons.visibility : Icons.visibility_off),
                 )
               : null,
