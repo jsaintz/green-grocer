@@ -19,8 +19,7 @@ class _CartTabState extends State<CartTab> {
   void removeItemFromCart(CartItemModel cartItemModel) {
     setState(() {
       data.cartItems.remove(cartItemModel);
-      utilsServices.showToast(
-          message: '${cartItemModel.itemModel.itemName} removido(a) do carinho');
+      utilsServices.showToast(message: '${cartItemModel.itemModel.itemName} removido(a) do carinho');
     });
   }
 
@@ -40,86 +39,98 @@ class _CartTabState extends State<CartTab> {
       appBar: AppBar(
         title: const Text('Carrinho'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: data.cartItems.length,
-              itemBuilder: (_, index) {
-                return CartTile(
-                  cartItem: data.cartItems[index],
-                  remove: removeItemFromCart,
-                );
-              },
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade300,
-                  blurRadius: 3,
-                  spreadRadius: 2,
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'Total Geral',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-                Text(
-                  utilsServices.priceToCurrency(cartTotalPrice()),
-                  style: TextStyle(
-                    fontSize: 23,
-                    color: Constants.customSwatchColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Constants.customSwatchColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        )),
-                    onPressed: () async {
-                      bool? result = await showOrderConfirmation();
+      body: _buildPage(context),
+    );
+  }
 
-                      if (result ?? false) {
-                        if (context.mounted) {
-                          showDialog(
-                            context: context,
-                            builder: (_) => PaymentDialog(order: data.orders.first),
-                          );
-                        }
-                      } else {
-                        utilsServices.showToast(message: 'Pedido não confirmado', isError: true);
-                      }
-                    },
-                    child: const Text(
-                      'Concluir Pedido',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ),
-                )
-              ],
-            ),
+  Column _buildPage(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: data.cartItems.length,
+            itemBuilder: (_, index) {
+              return CartTile(
+                cartItem: data.cartItems[index],
+                remove: removeItemFromCart,
+              );
+            },
           ),
-        ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade300,
+                blurRadius: 3,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: _buildTotal(context),
+        ),
+      ],
+    );
+  }
+
+  Column _buildTotal(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Total Geral',
+          style: TextStyle(
+            fontSize: 12,
+          ),
+        ),
+        Text(
+          utilsServices.priceToCurrency(cartTotalPrice()),
+          style: TextStyle(
+            fontSize: 23,
+            color: Constants.customSwatchColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        _buildCompleteOrderButton(context)
+      ],
+    );
+  }
+
+  SizedBox _buildCompleteOrderButton(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Constants.customSwatchColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            )),
+        onPressed: () async {
+          bool? result = await showOrderConfirmation() ?? false;
+
+          if (result) {
+            if (context.mounted) {
+              showDialog(
+                context: context,
+                builder: (_) => PaymentDialog(order: data.orders.first),
+              );
+            } else {
+              utilsServices.showToast(message: 'Pedido não confirmado', isError: true);
+            }
+          }
+        },
+        child: const Text(
+          'Concluir Pedido',
+          style: TextStyle(fontSize: 15),
+        ),
       ),
     );
   }
