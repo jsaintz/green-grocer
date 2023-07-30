@@ -38,13 +38,11 @@ class _ItemsTileState extends State<ItemsTile> {
     return Stack(
       children: [
         GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ProductScreen(itemModel: widget.itemModel),
-              ),
-            );
-          },
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ProductScreen(itemModel: widget.itemModel),
+            ),
+          ),
           child: Card(
             elevation: 5,
             shadowColor: Colors.grey.shade300,
